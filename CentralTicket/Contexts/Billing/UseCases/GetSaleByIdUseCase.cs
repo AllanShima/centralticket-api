@@ -5,21 +5,21 @@ using CentralTicket.Contexts.Billing.Interfaces.IUseCases;
 
 namespace CentralTicket.Contexts.Billing.UseCases
 {
-    public class ListSalesUseCase : IListSalesUseCase
+    public class GetSaleByIdUseCase : IGetSaleByIdUseCase
     {
         private readonly ISaleRepository _saleRepository;
-        public ListSalesUseCase(ISaleRepository saleRepository)
+        public GetSaleByIdUseCase(ISaleRepository saleRepository)
         {
             _saleRepository = saleRepository;
         }
 
-        public List<ReadSaleDTO> Run()
+        public ReadSaleDTO Run(Guid id)
         {
-            List<Sale> sales = new List<Sale>();
+            Sale sale = this._saleRepository.GetById(id);
 
-            sales = this._saleRepository.List();
-
-            return sales.Select(sale => new ReadSaleDTO
+            if (sale == null) throw new Exception("Venda não encontrada");
+            
+            return new ReadSaleDTO
             {
                 Id = sale.Id,
                 TotalValue = sale.TotalValue,
@@ -29,7 +29,7 @@ namespace CentralTicket.Contexts.Billing.UseCases
                 Customer = sale.Customer,
                 PurchasedTickets = sale.PurchasedTickets,
                 CreatedAt = sale.CreatedAt,
-            }).ToList();
+            };
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using CentralTicket.Contexts.Billing.Entities;
+﻿using CentralTicket.Contexts.Billing.DTOs.Sale;
 
 namespace CentralTicket.Contexts.Billing.Interfaces.IUseCases
 {
     public interface IGetSaleByIdUseCase
     {
-        public Sale Run(Guid id);
+        public ReadSaleDTO Run(Guid id);
     }
 }
