@@ -46,7 +46,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
         {
             try
             {
-                Sale sale = this._getSaleByIdUseCase.Run(id);
+                ReadSaleDTO sale = this._getSaleByIdUseCase.Run(id);
 
                 if (sale == null)
                 {

@@ -8,6 +8,7 @@
         public Base()
         {
             Id = Guid.NewGuid();
+            CreatedAt = DateTime.Now;
         }
     }
 }

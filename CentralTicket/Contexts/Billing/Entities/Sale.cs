@@ -1,14 +1,20 @@
-﻿using CentralTicket.Entities;
+﻿using CentralTicket.Contexts.Billing.ValueObjects;
+using CentralTicket.Entities;
 
 namespace CentralTicket.Contexts.Billing.Entities
 {
     public class Sale : Base
     {
-        public float TotalValue { get; private set; }
-        public int PaymentMethod {  get; set; } // Crédito, Débito
-        public int Status { get; set; } // Aprovado, Aguardando pagamento, cancelado
-        public string OrderCode { get; set; }
+        public Price TotalValue { get; private set; }
+        public PaymentMethod PaymentMethod {  get; set; }
+        public SaleStatus Status { get; set; }
+        public OrderCode OrderCode { get; set; }
         public User Customer { get; set; }
         public List<Ticket> PurchasedTickets { get; set; }
+
+        public void UpdateTotalValue(Price totalValue)
+        {
+            this.TotalValue = totalValue;
+        }
     }
 }
