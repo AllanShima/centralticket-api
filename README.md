@@ -1,2 +1,2 @@
 # Escopo MVP da API do projeto "CentralTicket"
-<img width="2391" height="1472" alt="escopo_centralticket-api drawio" src="https://github.com/user-attachments/assets/f1055720-c27a-4de8-aafd-5b236e85915a" />
+<img width="2391" height="1421" alt="escopo_centraltricket-api drawio" src="https://github.com/user-attachments/assets/a5811066-6bd1-4718-9712-b53c5180b3a4" />
