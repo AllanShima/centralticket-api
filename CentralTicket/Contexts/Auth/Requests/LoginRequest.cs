@@ -1,8 +1,8 @@
 ﻿using CentralTicket.Contexts.Auth.ValueObjects;
 
-namespace CentralTicket.Contexts.Auth
+namespace CentralTicket.Contexts.Auth.Requests
 {
-    public interface LoginRequest
+    public class LoginRequest
     {
         public Email Email { get; set; }
         public Password Password { get; set; }

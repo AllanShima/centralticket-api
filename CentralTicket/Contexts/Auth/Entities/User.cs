@@ -6,7 +6,7 @@ namespace CentralTicket.Contexts.Auth.Entities
     {
         public int Id { get; set; }
         public Name Name { get; set; }
-        public Password Password { get; set; }
+        public string PasswordHash { get; set; }
         public Email Email { get; set; }
         public DateOnly createdAt { get; set; }
     }
