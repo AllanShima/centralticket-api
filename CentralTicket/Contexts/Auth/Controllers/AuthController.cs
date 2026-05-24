@@ -1,5 +1,7 @@
 ﻿using CentralTicket.Contexts.Auth.Entities;
 using CentralTicket.Contexts.Auth.Requests;
+using CentralTicket.Contexts.Auth.UseCases;
+using CentralTicket.Contexts.Billing.Interfaces.IUseCases;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,23 +11,25 @@ namespace CentralTicket.Contexts.Auth.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly TokenGenerator _tokenGenerator;
-
-        public AuthController(TokenGenerator tokenGenerator)
+        private readonly RegisterUseCase _registerUseCase;
+        private readonly LoginUseCase _loginUseCase;
+        public AuthController(
+            RegisterUseCase registerUseCase,
+            LoginUseCase loginUseCase)
         {
-            this._tokenGenerator = tokenGenerator;
+            this._registerUseCase = registerUseCase;
+            this._loginUseCase = loginUseCase;
         }
-
-        private static User user = new();
 
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterRequest request)
         {
-            var hashedPassword = new PasswordHasher<User>()
-                .HashPassword(user, request.Password.Value);
+            var user = _registerUseCase.Run(request);
 
-            user.Email = request.Email;
-            user.PasswordHash = hashedPassword;
+            if (user == null)
+            {
+                return BadRequest("Usuário já cadastrado");
+            }
 
             return Ok(user);
         }
@@ -33,18 +37,13 @@ namespace CentralTicket.Contexts.Auth.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            // Implementation for login logic
-            if (user.Email != request.Email)
+            var token = _loginUseCase.Run(request);
+            
+            if (token == null)
             {
-                return BadRequest("Email não encontrado");
-            }
-            if(new PasswordHasher<User>().VerifyHashedPassword(user, user.PasswordHash, request.Password.Value) == PasswordVerificationResult.Failed)
-            {
-                return BadRequest("Senha incorreta");
+                return BadRequest("Credenciais inválidas");
             }
 
-            //var token = _tokenGenerator.GenerateToken(request.Email.Value);
-            var token = "success";
             return Ok(token);
         }
 
