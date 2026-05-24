@@ -8,13 +8,13 @@ namespace CentralTicket.Contexts.Auth.UseCases
 {
     public class LoginUseCase
     {
-        private readonly TokenGenerator _tokenGenerator;
+        private readonly CreateTokenUseCase _createTokenUseCase;
 
         private readonly IUserRepository _userRepository;
 
-        public LoginUseCase(TokenGenerator tokenGenerator, IUserRepository userRepository)
+        public LoginUseCase(CreateTokenUseCase createTokenUseCase, IUserRepository userRepository)
         {
-            this._tokenGenerator = tokenGenerator;
+            this._createTokenUseCase = createTokenUseCase;
             _userRepository = userRepository;
         }
 
@@ -33,7 +33,7 @@ namespace CentralTicket.Contexts.Auth.UseCases
                 return null;
             }
 
-            var token = _tokenGenerator.CreateToken(user);
+            var token = _createTokenUseCase.Run(user);
             return token;
         }
     }

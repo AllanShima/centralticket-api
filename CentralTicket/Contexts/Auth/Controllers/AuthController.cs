@@ -2,8 +2,10 @@
 using CentralTicket.Contexts.Auth.Requests;
 using CentralTicket.Contexts.Auth.UseCases;
 using CentralTicket.Contexts.Billing.Interfaces.IUseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CentralTicket.Contexts.Auth.Controllers
 {
@@ -47,5 +49,21 @@ namespace CentralTicket.Contexts.Auth.Controllers
             return Ok(token);
         }
 
+        [Authorize]
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("Você conseguiu acessar a rota protegida!");
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public IActionResult GetMe()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+
+            return Ok(new { Id = userId, Name = userName });
+        }
     }
 }

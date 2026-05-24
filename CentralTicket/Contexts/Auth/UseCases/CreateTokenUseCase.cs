@@ -3,20 +3,18 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using JetRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
-namespace CentralTicket.Contexts.Auth
+namespace CentralTicket.Contexts.Auth.UseCases
 {
-    public class TokenGenerator
+    public class CreateTokenUseCase
     {
         private readonly IConfiguration _configuration;
 
-        public TokenGenerator(IConfiguration configuration)
+        public CreateTokenUseCase(IConfiguration configuration)
         {
             this._configuration = configuration;
         }
-    
-        public string CreateToken(User user)
+        public string Run(User user)
         {
             var claims = new List<Claim>
             {
