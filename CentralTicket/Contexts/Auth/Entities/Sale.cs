@@ -1,5 +1,4 @@
-﻿using CentralTicket.Contexts.Billing.Entities;
-using CentralTicket.Contexts.Billing.ValueObjects;
+﻿using CentralTicket.Contexts.Auth.Entities;
 using CentralTicket.Entities;
 
 namespace CentralTicket.Contexts.Auth.Entities

@@ -4,7 +4,7 @@ namespace CentralTicket.Contexts.Auth.Requests
 {
     public class LoginRequest
     {
-        public Email Email { get; set; }
-        public Password Password { get; set; }
+        public required Email Email { get; set; }
+        public required Password Password { get; set; }
     }
 }

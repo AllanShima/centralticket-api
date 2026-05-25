@@ -4,9 +4,9 @@ namespace CentralTicket.Contexts.Auth.Requests
 {
     public class RegisterRequest
     {
-        public Name Name { get; set; }
-        public Email Email { get; set; }
-        public Password Password { get; set; } 
+        public required Name Name { get; set; }
+        public required Email Email { get; set; }
+        public required Password Password { get; set; } 
 
     }
 }

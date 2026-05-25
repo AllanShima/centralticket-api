@@ -1,4 +1,5 @@
-﻿using CentralTicket.Contexts.Auth.Entities;
+﻿using CentralTicket.Contexts.Auth.Dtos;
+using CentralTicket.Contexts.Auth.Entities;
 using CentralTicket.Contexts.Auth.Requests;
 using CentralTicket.Contexts.Auth.UseCases;
 using CentralTicket.Contexts.Billing.Interfaces.IUseCases;
@@ -15,12 +16,15 @@ namespace CentralTicket.Contexts.Auth.Controllers
     {
         private readonly RegisterUseCase _registerUseCase;
         private readonly LoginUseCase _loginUseCase;
+        private readonly RefreshTokensUseCase _refreshTokensUseCase;
         public AuthController(
             RegisterUseCase registerUseCase,
-            LoginUseCase loginUseCase)
+            LoginUseCase loginUseCase,
+            RefreshTokensUseCase refreshTokensUseCase)
         {
             this._registerUseCase = registerUseCase;
             this._loginUseCase = loginUseCase;
+            this._refreshTokensUseCase = refreshTokensUseCase;
         }
 
         [HttpPost("register")]
@@ -37,16 +41,16 @@ namespace CentralTicket.Contexts.Auth.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<TokenResponseDto>> Login([FromBody] LoginRequest request)
         {
-            var token = _loginUseCase.Run(request);
+            var result = await _loginUseCase.Run(request);
             
-            if (token == null)
+            if (result == null)
             {
                 return BadRequest("Credenciais inválidas");
             }
 
-            return Ok(token);
+            return Ok(result);
         }
 
         [Authorize]
@@ -64,6 +68,19 @@ namespace CentralTicket.Contexts.Auth.Controllers
             var userName = User.FindFirst(ClaimTypes.Name)?.Value;
 
             return Ok(new { Id = userId, Name = userName });
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<TokenResponseDto>> RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            var result = await _refreshTokensUseCase.Run(request);
+
+            if (result == null || result.AccessToken == null || result.RefreshToken == null || result.RefreshToken == null)
+            {
+                return Unauthorized("Refresh token inválido");
+            }
+
+            return Ok(result);
         }
     }
 }

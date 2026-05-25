@@ -1,6 +1,7 @@
 using CentralTicket.Contexts.Auth;
 using CentralTicket.Contexts.Auth.Interfaces.IRepositories;
 using CentralTicket.Contexts.Auth.Repositories;
+using CentralTicket.Contexts.Auth.UseCases;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -41,6 +42,11 @@ namespace CentralTicket
             builder.Services.AddScoped<Contexts.Auth.UseCases.LoginUseCase>();
             builder.Services.AddScoped<Contexts.Auth.UseCases.CreateTokenUseCase>();
             builder.Services.AddScoped<Contexts.Auth.UseCases.ValidateTokenUseCase>();
+            builder.Services.AddScoped<Contexts.Auth.UseCases.GenerateAndSaveRefreshTokenUseCase>();
+            builder.Services.AddScoped<Contexts.Auth.UseCases.GenerateRefreshTokenUseCase>();
+            builder.Services.AddScoped<Contexts.Auth.UseCases.ValidateRefreshToken>();
+            builder.Services.AddScoped<Contexts.Auth.UseCases.CreateTokenResponseUseCase>();
+            builder.Services.AddScoped<Contexts.Auth.UseCases.RefreshTokensUseCase>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
