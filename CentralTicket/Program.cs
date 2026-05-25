@@ -14,9 +14,17 @@ namespace CentralTicket
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000") // Permite explicitamente o seu front
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
 
-            builder.Services.AddSingleton<TokenGenerator>();
+            // Add services to the container.
 
             builder.Services.AddAuthorization();
 
@@ -31,6 +39,8 @@ namespace CentralTicket
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<Contexts.Auth.UseCases.RegisterUseCase>();
             builder.Services.AddScoped<Contexts.Auth.UseCases.LoginUseCase>();
+            builder.Services.AddScoped<Contexts.Auth.UseCases.CreateTokenUseCase>();
+            builder.Services.AddScoped<Contexts.Auth.UseCases.ValidateTokenUseCase>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -59,6 +69,8 @@ namespace CentralTicket
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowFrontend");
 
             app.UseAuthentication();
             app.UseAuthorization();
