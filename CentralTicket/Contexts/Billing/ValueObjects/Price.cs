@@ -2,13 +2,15 @@
 {
     public class Price
     {
-        public float Value { get; private set; }
+        public decimal Value { get; private set; }
 
-        public Price(float price)
+        public Price(decimal price)
         {
             if (price < 0) throw new Exception("Valor deve ser positivo");
 
             this.Value = price;
         }
+
+        private Price() { }
     }
 }
