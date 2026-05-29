@@ -1,5 +1,6 @@
 ﻿using CentralTicket.Contexts.Billing.DTOs.Sale;
 using CentralTicket.Contexts.Billing.Interfaces.IUseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CentralTicket.Contexts.Billing.Controllers
@@ -43,6 +44,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("GetById")]
         public IActionResult GetById([FromQuery] Guid id)
         {
@@ -63,6 +65,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] CreateSaleDTO sale)
         {
@@ -78,6 +81,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult Cancel([FromQuery] Guid id)
         {
