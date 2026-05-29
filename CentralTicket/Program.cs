@@ -70,6 +70,15 @@ namespace CentralTicket
             builder.Services.AddScoped<Contexts.Billing.Interfaces.IUseCases.IGetSaleByIdUseCase, Contexts.Billing.UseCases.GetSaleByIdUseCase>();
             builder.Services.AddScoped<Contexts.Billing.Interfaces.IUseCases.IListSalesUseCase, Contexts.Billing.UseCases.ListSalesUseCase>();
 
+            // Profile
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IRepositories.IUserRepository,Contexts.Profile.Repositories.UserRepository>();
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IRepositories.ISaleRepository,Contexts.Profile.Repositories.SaleRepository>();
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IRepositories.ITicketRepository,Contexts.Profile.Repositories.TicketRepository>();
+
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IUseCases.IGetSalesByUserIdUseCase,Contexts.Profile.UseCases.GetSalesByUserIdUseCase>();
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IUseCases.IGetTicketsByUserIdUseCase,Contexts.Profile.UseCases.GetTicketsByUserIdUseCase>();
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IUseCases.IGetUserByIdUseCase, GetUserByIdUseCase>();
+
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
