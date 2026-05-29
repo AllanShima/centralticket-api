@@ -4,11 +4,11 @@
     {
         public decimal Value { get; private set; }
 
-        public Price(decimal price)
+        public Price(decimal value)
         {
-            if (price < 0) throw new Exception("Valor deve ser positivo");
+            if (value < 0) throw new Exception("Valor deve ser positivo");
 
-            this.Value = price;
+            this.Value = value;
         }
 
         private Price() { }

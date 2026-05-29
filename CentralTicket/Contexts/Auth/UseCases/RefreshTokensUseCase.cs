@@ -6,10 +6,10 @@ namespace CentralTicket.Contexts.Auth.UseCases
 {
     public class RefreshTokensUseCase : IRefreshTokensUseCase
     {
-        private readonly ValidateRefreshTokenUseCase _validateRefreshToken;
-        private readonly CreateTokenResponseUseCase _createTokenResponseUseCase;
+        private readonly IValidateRefreshTokenUseCase _validateRefreshToken;
+        private readonly ICreateTokenResponseUseCase _createTokenResponseUseCase;
 
-        public RefreshTokensUseCase(ValidateRefreshTokenUseCase validateRefreshToken, CreateTokenResponseUseCase createTokenResponseUseCase)
+        public RefreshTokensUseCase(IValidateRefreshTokenUseCase validateRefreshToken, ICreateTokenResponseUseCase createTokenResponseUseCase)
         {
             _validateRefreshToken = validateRefreshToken;
             _createTokenResponseUseCase = createTokenResponseUseCase;

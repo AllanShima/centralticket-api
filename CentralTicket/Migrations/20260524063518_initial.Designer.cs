@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CentralTicket.Migrations
 {
-    [DbContext(typeof(Context))]
+    [DbContext(typeof(AuthDbContext))]
     [Migration("20260524063518_initial")]
     partial class initial
     {

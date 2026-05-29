@@ -10,11 +10,11 @@ namespace CentralTicket.Contexts.Auth.UseCases
 {
     public class LoginUseCase : ILoginUseCase
     {
-        private readonly CreateTokenResponseUseCase _createTokenResponseUseCase;
+        private readonly ICreateTokenResponseUseCase _createTokenResponseUseCase;
 
         private readonly IUserRepository _userRepository;
 
-        public LoginUseCase(CreateTokenResponseUseCase createTokenResponseUseCase, IUserRepository userRepository)
+        public LoginUseCase(ICreateTokenResponseUseCase createTokenResponseUseCase, IUserRepository userRepository)
         {
             _createTokenResponseUseCase = createTokenResponseUseCase;
             _userRepository = userRepository;

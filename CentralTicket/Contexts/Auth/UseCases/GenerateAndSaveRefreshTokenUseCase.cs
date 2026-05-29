@@ -7,10 +7,10 @@ namespace CentralTicket.Contexts.Auth.UseCases
 {
     public class GenerateAndSaveRefreshTokenUseCase : IGenerateAndSaveRefreshTokenUseCase
     {
-        private readonly GenerateRefreshTokenUseCase _generateRefreshTokenUseCase;
+        private readonly IGenerateRefreshTokenUseCase _generateRefreshTokenUseCase;
 
         private readonly IUserRepository _userRepository;
-        public GenerateAndSaveRefreshTokenUseCase(GenerateRefreshTokenUseCase generateRefreshTokenUseCase, IUserRepository userRepository)
+        public GenerateAndSaveRefreshTokenUseCase(IGenerateRefreshTokenUseCase generateRefreshTokenUseCase, IUserRepository userRepository)
         {
             _generateRefreshTokenUseCase = generateRefreshTokenUseCase;
             _userRepository = userRepository;

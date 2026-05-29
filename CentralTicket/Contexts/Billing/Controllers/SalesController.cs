@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CentralTicket.Contexts.Billing.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class SalesController : ControllerBase
     {
         private readonly IListSalesUseCase _listSalesUseCase;
@@ -29,7 +29,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
             this._confirmSaleUseCase = confirmSaleUseCase;
         }
 
-        [HttpGet]
+        [HttpGet("index")]
         public IActionResult Index()
         {
             try
@@ -45,7 +45,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
         }
 
         [Authorize]
-        [HttpGet("GetById")]
+        [HttpGet("getbyid")]
         public IActionResult GetById([FromQuery] Guid id)
         {
             try
@@ -66,7 +66,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("create")]
         public IActionResult Create([FromBody] CreateSaleDTO sale)
         {
             try
@@ -82,7 +82,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
         }
 
         [Authorize]
-        [HttpPut]
+        [HttpPut("cancel")]
         public IActionResult Cancel([FromQuery] Guid id)
         {
             try
@@ -97,8 +97,8 @@ namespace CentralTicket.Contexts.Billing.Controllers
             }
         }
 
-        [HttpPut]
-        public IActionResult Cofirm([FromQuery] Guid id)
+        [HttpPut("confirm")]
+        public IActionResult Confirm([FromQuery] Guid id)
         {
             try
             {
