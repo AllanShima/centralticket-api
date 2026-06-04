@@ -1,5 +1,6 @@
 using CentralTicket.Contexts.Auth.Data;
 using CentralTicket.Contexts.Billing.Data;
+using CentralTicket.Contexts.Events.Data;
 using CentralTicket.Contexts.Profile.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Scalar.AspNetCore;
 using System.Text;
+
 
 namespace CentralTicket
 {
@@ -42,6 +44,9 @@ namespace CentralTicket
             builder.Services.AddDbContext<ProfileDbContext>(opt =>
                 opt.UseMySql(conn, serverVersion, x => x.SchemaBehavior(MySqlSchemaBehavior.Ignore)));
 
+            builder.Services.AddDbContext<EventsDbContext>(opt =>
+                opt.UseMySql(conn, serverVersion, x => x.SchemaBehavior(MySqlSchemaBehavior.Ignore)));
+
             // Auth
             builder.Services.AddScoped<Contexts.Auth.Interfaces.IRepositories.IUserRepository, Contexts.Auth.Repositories.UserRepository>();
             builder.Services.AddScoped<Contexts.Auth.UseCases.RegisterUseCase>();
@@ -63,6 +68,15 @@ namespace CentralTicket
             builder.Services.AddScoped<Contexts.Billing.Interfaces.IUseCases.ICreateSaleUseCase, Contexts.Billing.UseCases.CreateSaleUseCase>();
             builder.Services.AddScoped<Contexts.Billing.Interfaces.IUseCases.IGetSaleByIdUseCase, Contexts.Billing.UseCases.GetSaleByIdUseCase>();
             builder.Services.AddScoped<Contexts.Billing.Interfaces.IUseCases.IListSalesUseCase, Contexts.Billing.UseCases.ListSalesUseCase>();
+
+            // Events
+            builder.Services.AddScoped<Contexts.Events.Interfaces.IRepositories.IEventRepository, Contexts.Events.Repositories.EventRepository>();
+            builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.ICreateEventUseCase, Contexts.Events.UseCases.CreateEventUseCase>();
+            builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.IGetEventByIdUseCase, Contexts.Events.UseCases.GetEventByIdUseCase>();
+            builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.IGetAllEventsUseCase, Contexts.Events.UseCases.GetAllEventsUseCase>();
+            builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.IUpdateEventUseCase, Contexts.Events.UseCases.UpdateEventUseCase>();
+            builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.IUpdateEventStatusUseCase, Contexts.Events.UseCases.UpdateEventStatusUseCase>();
+            builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.IUpdateTicketsRemainingUseCase, Contexts.Events.UseCases.UpdateTicketsRemainingUseCase>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
