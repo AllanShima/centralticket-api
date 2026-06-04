@@ -1,5 +1,6 @@
 ﻿using CentralTicket.Contexts.Auth.Entities;
 using CentralTicket.Contexts.Auth.Mappings;
+using CentralTicket.Contexts.Auth.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace CentralTicket.Contexts.Auth.Data

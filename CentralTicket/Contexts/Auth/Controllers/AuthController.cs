@@ -1,5 +1,6 @@
 ﻿using CentralTicket.Contexts.Auth.Dtos;
 using CentralTicket.Contexts.Auth.Entities;
+using CentralTicket.Contexts.Auth.Interfaces.IUseCases;
 using CentralTicket.Contexts.Auth.Requests;
 using CentralTicket.Contexts.Auth.UseCases;
 using CentralTicket.Contexts.Billing.Interfaces.IUseCases;
@@ -14,13 +15,13 @@ namespace CentralTicket.Contexts.Auth.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly RegisterUseCase _registerUseCase;
-        private readonly LoginUseCase _loginUseCase;
-        private readonly RefreshTokensUseCase _refreshTokensUseCase;
+        private readonly IRegisterUseCase _registerUseCase;
+        private readonly ILoginUseCase _loginUseCase;
+        private readonly IRefreshTokensUseCase _refreshTokensUseCase;
         public AuthController(
-            RegisterUseCase registerUseCase,
-            LoginUseCase loginUseCase,
-            RefreshTokensUseCase refreshTokensUseCase)
+            IRegisterUseCase registerUseCase,
+            ILoginUseCase loginUseCase,
+            IRefreshTokensUseCase refreshTokensUseCase)
         {
             this._registerUseCase = registerUseCase;
             this._loginUseCase = loginUseCase;

@@ -10,13 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CentralTicket.Migrations
 {
-    [DbContext(typeof(Context))]
+    [DbContext(typeof(AuthDbContext))]
     partial class ContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("auth")
                 .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
@@ -54,7 +55,7 @@ namespace CentralTicket.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Event");
+                    b.ToTable("Event", "auth");
                 });
 
             modelBuilder.Entity("CentralTicket.Contexts.Auth.Entities.Sale", b =>
@@ -92,7 +93,7 @@ namespace CentralTicket.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Sale");
+                    b.ToTable("Sale", "auth");
                 });
 
             modelBuilder.Entity("CentralTicket.Contexts.Auth.Entities.Ticket", b =>
@@ -131,7 +132,7 @@ namespace CentralTicket.Migrations
 
                     b.HasIndex("SaleId");
 
-                    b.ToTable("Ticket");
+                    b.ToTable("Ticket", "auth");
                 });
 
             modelBuilder.Entity("CentralTicket.Contexts.Auth.Entities.User", b =>
@@ -140,17 +141,10 @@ namespace CentralTicket.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("PasswordHash");
 
                     b.Property<string>("ProfilePictureUrl")
                         .IsRequired()
@@ -167,7 +161,7 @@ namespace CentralTicket.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("auth_Users", "auth");
                 });
 
             modelBuilder.Entity("CentralTicket.Contexts.Auth.Entities.Sale", b =>
@@ -190,6 +184,51 @@ namespace CentralTicket.Migrations
                         .HasForeignKey("SaleId");
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("CentralTicket.Contexts.Auth.Entities.User", b =>
+                {
+                    b.OwnsOne("CentralTicket.Contexts.Auth.ValueObjects.Email", "Email", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("Email");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("auth_Users", "auth");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsOne("CentralTicket.Contexts.Auth.ValueObjects.Name", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("Name");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("auth_Users", "auth");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Email")
+                        .IsRequired();
+
+                    b.Navigation("Name")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CentralTicket.Contexts.Auth.Entities.Sale", b =>

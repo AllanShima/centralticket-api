@@ -22,5 +22,10 @@ namespace CentralTicket.Contexts.Auth.Repositories
             _database.Users.Add(newUser);
             _database.SaveChanges();
         }
+
+        public void SaveChanges()
+        {
+            _database.SaveChanges();
+        }
     }
 }
