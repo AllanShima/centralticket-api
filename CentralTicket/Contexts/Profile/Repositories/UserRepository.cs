@@ -19,5 +19,11 @@ namespace CentralTicket.Contexts.Profile.Repositories
 
             return user;
         }
+
+        public void Create(User user)
+        {
+            _database.Users.Add(user);
+            _database.SaveChanges();
+        }
     }
 }

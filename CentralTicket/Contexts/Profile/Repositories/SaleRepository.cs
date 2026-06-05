@@ -1,5 +1,4 @@
-﻿// Profile/Repositories/SaleRepository.cs
-namespace CentralTicket.Contexts.Profile.Repositories
+﻿namespace CentralTicket.Contexts.Profile.Repositories
 {
     using CentralTicket.Contexts.Profile.Data;
     using CentralTicket.Contexts.Profile.Entities;
@@ -22,6 +21,12 @@ namespace CentralTicket.Contexts.Profile.Repositories
                     .ThenInclude(t => t.Event)
                 .Where(s => s.Customer.Id == userId)
                 .ToList();
+        }
+
+        public void Create(Sale sale)
+        {
+            _database.Sales.Add(sale);
+            _database.SaveChanges();
         }
     }
 }

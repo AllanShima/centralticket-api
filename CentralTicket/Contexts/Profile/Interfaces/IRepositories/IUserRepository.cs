@@ -5,5 +5,6 @@ namespace CentralTicket.Contexts.Profile.Interfaces.IRepositories
     public interface IUserRepository
     {
         public User GetById(Guid id);
+        public void Create(User user);
     }
 }
