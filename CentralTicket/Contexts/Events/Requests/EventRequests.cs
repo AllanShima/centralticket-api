@@ -24,7 +24,8 @@ public class CreateEventRequest
     [Required]
     public DateTime EndDate { get; set; }
 
-    [Range(0, double.MaxValue, ErrorMessage = "Preço não pode ser negativo")]
+    // double.MaxValue dá erro e não gera os endpoints
+    [Range(0, 999999999, ErrorMessage = "Preço não pode ser negativo")]
     public decimal Price { get; set; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Quantidade deve ser maior que zero")]
