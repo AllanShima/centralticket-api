@@ -2,10 +2,7 @@ using CentralTicket.Contexts.Auth.Data;
 using CentralTicket.Contexts.Billing.Data;
 using CentralTicket.Contexts.Events.Data;
 using CentralTicket.Contexts.Profile.Data;
-using CentralTicket.Contexts.Auth;
-using CentralTicket.Contexts.Auth.Interfaces.IRepositories;
 using CentralTicket.Contexts.Auth.Interfaces.IUseCases;
-using CentralTicket.Contexts.Auth.Repositories;
 using CentralTicket.Contexts.Auth.UseCases;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -83,6 +80,10 @@ namespace CentralTicket
             builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.IUpdateEventUseCase, Contexts.Events.UseCases.UpdateEventUseCase>();
             builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.IUpdateEventStatusUseCase, Contexts.Events.UseCases.UpdateEventStatusUseCase>();
             builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.IUpdateTicketsRemainingUseCase, Contexts.Events.UseCases.UpdateTicketsRemainingUseCase>();
+
+            // Profile
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IRepositories.IUserRepository, Contexts.Profile.Repositories.UserRepository>();
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IRepositories.ISaleRepository, Contexts.Profile.Repositories.SaleRepository>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

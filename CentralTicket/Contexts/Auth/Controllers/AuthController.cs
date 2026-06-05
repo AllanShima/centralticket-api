@@ -1,11 +1,7 @@
 ﻿using CentralTicket.Contexts.Auth.Dtos;
-using CentralTicket.Contexts.Auth.Entities;
 using CentralTicket.Contexts.Auth.Interfaces.IUseCases;
 using CentralTicket.Contexts.Auth.Requests;
-using CentralTicket.Contexts.Auth.UseCases;
-using CentralTicket.Contexts.Billing.Interfaces.IUseCases;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 

@@ -5,5 +5,6 @@ namespace CentralTicket.Contexts.Profile.Interfaces.IRepositories
     public interface ISaleRepository
     {
         public List<Sale> GetByUserId(Guid id);
+        public void Create(Sale sale);
     }
 }

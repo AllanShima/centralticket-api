@@ -4,5 +4,7 @@
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+
+        public void SetId(Guid id) => Id = id;
     }
 }

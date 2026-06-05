@@ -9,5 +9,7 @@ namespace CentralTicket.Contexts.Profile.Entities
         public string Kind { get; set; }
         public string Status { get; private set; }
         public Event Event { get; set; }
+
+        public void UpdateValue(double value) => Value = value;
     }
 }
