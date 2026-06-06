@@ -4,6 +4,6 @@ namespace CentralTicket.Contexts.Billing.Interfaces.IUseCases
 {
     public interface ICreateSaleUseCase
     {
-        public void Run(CreateSaleDTO sale);
+        public Task Run(CreateSaleDTO sale);
     }
 }

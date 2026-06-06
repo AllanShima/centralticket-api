@@ -67,11 +67,11 @@ namespace CentralTicket.Contexts.Billing.Controllers
 
         [Authorize]
         [HttpPost("Create")]
-        public IActionResult Create([FromBody] CreateSaleDTO sale)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateSaleDTO sale)
         {
             try
             {
-                this._createSaleUseCase.Run(sale);
+                await this._createSaleUseCase.Run(sale);
 
                 return Created();
             }

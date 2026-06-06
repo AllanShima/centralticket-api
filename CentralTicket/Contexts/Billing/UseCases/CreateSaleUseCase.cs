@@ -10,7 +10,7 @@ namespace CentralTicket.Contexts.Billing.UseCases
     {
         private readonly ISaleRepository _saleRepository;
         //private readonly IUserRepository _userRepository;
-        private readonly ITicketRepository _ticketRepository;
+        private readonly Contexts.Events.Interfaces.IRepositories.IEventRepository _eventRepository;
         private readonly Contexts.Auth.Interfaces.IRepositories.IUserRepository _authUserRepository;
         // private readonly Contexts.Profile.Interfaces.IRepositories.ISaleRepository _profileSaleRepository;
         // private readonly Contexts.Profile.Interfaces.IRepositories.IUserRepository _profileUserRepository;
@@ -19,7 +19,7 @@ namespace CentralTicket.Contexts.Billing.UseCases
             ISaleRepository saleRepository,
             //IUserRepository userRepository,
             Contexts.Auth.Interfaces.IRepositories.IUserRepository authUserRepository,
-            ITicketRepository ticketRepository
+            Contexts.Events.Interfaces.IRepositories.IEventRepository eventRepository
             // Contexts.Profile.Interfaces.IRepositories.ISaleRepository profileSaleRepository,
             // Contexts.Profile.Interfaces.IRepositories.IUserRepository profileUserRepository
             )
@@ -27,17 +27,51 @@ namespace CentralTicket.Contexts.Billing.UseCases
             _saleRepository = saleRepository;
             _authUserRepository = authUserRepository;
             //_userRepository = userRepository;
-            _ticketRepository = ticketRepository;
+            _eventRepository = eventRepository;
             // _profileSaleRepository = profileSaleRepository;
             // _profileUserRepository = profileUserRepository;
         }
 
-        public void Run(CreateSaleDTO sale)
+        public async Task Run(CreateSaleDTO sale)
         {
+            // Busca o evento pra validar o estoque
+            var ev = await _eventRepository.GetByIdAsync(sale.EventId);
+
+            if (ev == null)
+            {
+                throw new ArgumentException($"Evento com id '{sale.EventId}' não encontrado.");
+            }
+            if (ev.Status == Contexts.Events.Enums.EventStatus.Shortly)       
+            {
+                throw new ArgumentException($"Ingressos ainda não disponíveis para o evento: '{ev.Title}'.");
+            }
+            if (ev.Status == Contexts.Events.Enums.EventStatus.SoldOut)
+            {
+                throw new ArgumentException($"Não há ingressos disponíveis para o evento: '{ev.Title}'.");
+            }
+
+            // Decrementa a quantidade de ingressos disponíveis no evento
+
+            int ticketsQuantity = sale.Tickets.Count;
+            bool success = ev.DecrementTickets(ticketsQuantity);
+
+            if (!success)
+            {
+                ev.UpdateStatus(Contexts.Events.Enums.EventStatus.SoldOut);
+                throw new InvalidOperationException($"Não há ingressos suficientes disponíveis para o evento '{ev.Title}'.");
+            }
+
+            await _eventRepository.UpdateAsync(ev);
+
+            // --------
+
             //var customer = _userRepository.GetById(sale.UserId);
             var customer = _authUserRepository.GetById(sale.UserId);
             if (customer == null)
+            {
                 throw new ArgumentException($"Usuário com id '{sale.UserId}' não encontrado.", nameof(sale.UserId));
+            }
+                
 
             var newSale = new Sale
             {

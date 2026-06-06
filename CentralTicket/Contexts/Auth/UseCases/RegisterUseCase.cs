@@ -32,7 +32,6 @@ namespace CentralTicket.Contexts.Auth.UseCases
             newUser.Email = request.Email;
             newUser.PasswordHash = hashedPassword;
             newUser.ProfilePictureUrl = "";
-            newUser.Sales = new List<Sale>();
 
             _userRepository.Create(newUser);
 
