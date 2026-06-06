@@ -11,7 +11,7 @@ namespace CentralTicket.Contexts.Billing.DTOs.Sale
         public PaymentMethod PaymentMethod { get; set; } // Crédito, Débito
         public SaleStatus Status { get; set; }
         public OrderCode OrderCode { get; set; }
-        public User Customer { get; set; }
-        public List<Ticket> PurchasedTickets { get; set; }
+        public Guid CustomerId { get; set; }
+        public List<Contexts.Billing.Entities.Ticket> PurchasedTickets { get; set; }
     }
 }

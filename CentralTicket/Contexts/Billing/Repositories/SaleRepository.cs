@@ -1,6 +1,7 @@
 ﻿using CentralTicket.Contexts.Billing.Data;
 using CentralTicket.Contexts.Billing.Entities;
 using CentralTicket.Contexts.Billing.Interfaces.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace CentralTicket.Contexts.Billing.Repositories
 {
@@ -15,16 +16,16 @@ namespace CentralTicket.Contexts.Billing.Repositories
 
         public List<Sale> List()
         {
-            List<Sale> sales = _database.Sales.Select(sales => sales).ToList();
+            List<Sale> sales = _database.Sales.Select(sales => sales).Include(sale => sale.PurchasedTickets).ToList();
 
             return sales;
         }
 
         public Sale GetById(Guid id)
         {
-            Sale sale = _database.Sales.Select(sale => sale).Where(sale => sale.Id == id).FirstOrDefault();
-
-            return sale;
+            return _database.Sales
+                .Include(sale => sale.PurchasedTickets)
+                .FirstOrDefault(sale => sale.Id == id);
         }
 
         public void Create(Sale newSale)

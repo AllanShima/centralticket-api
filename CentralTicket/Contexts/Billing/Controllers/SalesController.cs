@@ -29,7 +29,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
             this._confirmSaleUseCase = confirmSaleUseCase;
         }
 
-        [HttpGet("index")]
+        [HttpGet("GetAll")]
         public IActionResult Index()
         {
             try
@@ -45,7 +45,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
         }
 
         [Authorize]
-        [HttpGet("getbyid")]
+        [HttpGet("GetById")]
         public IActionResult GetById([FromQuery] Guid id)
         {
             try
@@ -66,7 +66,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
         }
 
         [Authorize]
-        [HttpPost("create")]
+        [HttpPost("Create")]
         public IActionResult Create([FromBody] CreateSaleDTO sale)
         {
             try
@@ -82,7 +82,7 @@ namespace CentralTicket.Contexts.Billing.Controllers
         }
 
         [Authorize]
-        [HttpPut("cancel")]
+        [HttpPut("Cancel")]
         public IActionResult Cancel([FromQuery] Guid id)
         {
             try
@@ -97,7 +97,8 @@ namespace CentralTicket.Contexts.Billing.Controllers
             }
         }
 
-        [HttpPut("confirm")]
+        [Authorize]
+        [HttpPut("Confirm")]
         public IActionResult Confirm([FromQuery] Guid id)
         {
             try

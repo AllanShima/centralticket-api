@@ -2,8 +2,8 @@
 
 namespace CentralTicket.Contexts.Profile.Interfaces.IUseCases
 {
-    public interface IGetSalesByUserIdUseCase
+    public interface IGetSalesByIdUseCase
     {
-        public List<ReadSaleDTO> Run(Guid id);
+        public Task<List<ReadSaleDTO>> Run(Guid userId);
     }
 }

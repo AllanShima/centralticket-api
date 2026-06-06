@@ -10,7 +10,9 @@ namespace CentralTicket.Contexts.Billing.Entities
         public PaymentMethod PaymentMethod {  get; set; }
         public SaleStatus Status { get; set; }
         public OrderCode OrderCode { get; set; }
-        public User Customer { get; set; }
+        // public User Customer { get; set; }
+
+        public Guid CustomerId { get; set; }
         public List<Ticket> PurchasedTickets { get; set; }
 
         public void UpdateTotalValue(Price totalValue)

@@ -23,5 +23,11 @@
                 .SelectMany(s => s.PurchasedTickets)
                 .ToList();
         }
+
+        public void Create(Ticket ticket)
+        {
+            _database.Tickets.Add(ticket);
+            _database.SaveChanges();
+        }
     }
 }

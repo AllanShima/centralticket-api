@@ -26,7 +26,7 @@ namespace CentralTicket.Contexts.Billing.UseCases
                 PaymentMethod = sale.PaymentMethod,
                 Status = sale.Status,
                 OrderCode = sale.OrderCode,
-                Customer = sale.Customer,
+                CustomerId = sale.CustomerId,
                 PurchasedTickets = sale.PurchasedTickets,
                 CreatedAt = sale.CreatedAt,
             };

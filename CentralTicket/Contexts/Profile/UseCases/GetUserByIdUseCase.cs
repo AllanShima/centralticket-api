@@ -7,23 +7,24 @@ namespace CentralTicket.Contexts.Profile.UseCases
 {
     public class GetUserByIdUseCase : IGetUserByIdUseCase
     {
-        private readonly IUserRepository _userRepository;
-        public GetUserByIdUseCase(IUserRepository userRepository)
+        private readonly Contexts.Auth.Interfaces.IRepositories.IUserRepository _authUserRepository;
+        public GetUserByIdUseCase(Contexts.Auth.Interfaces.IRepositories.IUserRepository authUserRepository)
         {
-            _userRepository = userRepository;
+            _authUserRepository = authUserRepository;
         }
 
         public ReadUserDTO Run(Guid id)
         {
-            User user = this._userRepository.GetById(id);
+            var user = this._authUserRepository.GetById(id);
+             
 
-            if (user == null) throw new Exception("User nao encontrado");
+            if (user == null) throw new Exception("Usuário não encontrado");
             
             return new ReadUserDTO
             {
                 Id = user.Id,
-                Name = user.Name,
-                Password = user.Password,
+                Name = new ValueObjects.Name(user.Name.Value),
+                Email = new ValueObjects.Email(user.Email.Value),
                 ProfilePictureUrl = user.ProfilePictureUrl
             };
         }

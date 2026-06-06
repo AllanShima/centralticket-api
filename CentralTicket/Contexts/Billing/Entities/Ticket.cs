@@ -10,6 +10,7 @@ namespace CentralTicket.Contexts.Billing.Entities
         public Category Category {  get; set; }
         public Kind Kind { get; set; }
         public TicketStatus Status { get; set; }
-        public Event Event { get; set; }
+        public Guid EventId { get; set; }
+        public Guid SaleId { get; set; }
     }
 }

@@ -18,9 +18,8 @@ namespace CentralTicket.Contexts.Billing.Mappings
             builder.OwnsOne(t => t.Value, p =>
                 p.Property(x => x.Value).HasColumnName("Value").HasColumnType("decimal(18,2)"));
 
-            builder.HasOne(t => t.Event)
-                .WithMany()
-                .HasForeignKey("EventId");
+            builder.Property(x => x.EventId)
+                   .IsRequired();
         }
     }
 }

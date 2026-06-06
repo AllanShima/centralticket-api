@@ -4,6 +4,7 @@ using CentralTicket.Contexts.Billing.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CentralTicket.Migrations.BillingDb
 {
     [DbContext(typeof(BillingDbContext))]
-    partial class BillingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260606064701_RemoveFkFisicaUsuarioBilling")]
+    partial class RemoveFkFisicaUsuarioBilling
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,8 +58,7 @@ namespace CentralTicket.Migrations.BillingDb
                         .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("CustomerId")
-                        .HasColumnType("char(36)")
-                        .HasColumnName("CustomerId");
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int")
@@ -67,6 +69,8 @@ namespace CentralTicket.Migrations.BillingDb
                         .HasColumnName("Status");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("billing_Sales", "billing");
                 });
@@ -145,6 +149,12 @@ namespace CentralTicket.Migrations.BillingDb
 
             modelBuilder.Entity("CentralTicket.Contexts.Billing.Entities.Sale", b =>
                 {
+                    b.HasOne("CentralTicket.Contexts.Billing.Entities.User", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("CentralTicket.Contexts.Billing.ValueObjects.Price", "TotalValue", b1 =>
                         {
                             b1.Property<Guid>("SaleId")
@@ -179,6 +189,8 @@ namespace CentralTicket.Migrations.BillingDb
                             b1.WithOwner()
                                 .HasForeignKey("SaleId");
                         });
+
+                    b.Navigation("Customer");
 
                     b.Navigation("OrderCode")
                         .IsRequired();

@@ -1,4 +1,5 @@
-﻿using CentralTicket.Contexts.Billing.Enums;
+﻿using CentralTicket.Contexts.Billing.DTOs.Ticket;
+using CentralTicket.Contexts.Billing.Enums;
 using CentralTicket.Contexts.Billing.ValueObjects;
 
 namespace CentralTicket.Contexts.Billing.DTOs.Sale
@@ -8,6 +9,8 @@ namespace CentralTicket.Contexts.Billing.DTOs.Sale
         public Price TotalValue { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public Guid UserId { get; set; }
-        public List<Guid> TicketIds { get; set; }
+        public Guid EventId { get; set; }
+        // public List<Guid> TicketIds { get; set; }
+        public List<TicketItemDTO> Tickets { get; set; }
     }
 }

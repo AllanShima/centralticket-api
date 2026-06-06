@@ -1,28 +1,30 @@
 ﻿using CentralTicket.Contexts.Profile.DTOs.User;
 using CentralTicket.Contexts.Profile.Interfaces.IUseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CentralTicket.Contexts.Profile.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class ProfileController : ControllerBase
     {
         private readonly IGetUserByIdUseCase _getUser;
-        private readonly IGetSalesByUserIdUseCase _getSales;
-        private readonly IGetTicketsByUserIdUseCase _getTickets;
+        private readonly IGetSalesByIdUseCase _getSales;
+        private readonly IGetTicketsBySaleIdUseCase _getTickets;
 
         public ProfileController(
             IGetUserByIdUseCase getUser,
-            IGetSalesByUserIdUseCase getSales,
-            IGetTicketsByUserIdUseCase getTickets)
+            IGetSalesByIdUseCase getSales,
+            IGetTicketsBySaleIdUseCase getTickets)
         {
             _getUser = getUser;
             _getSales = getSales;
             _getTickets = getTickets;
         }
 
-        [HttpGet("GetById")]
+        [Authorize]
+        [HttpGet("GetUserById")]
         public IActionResult GetById([FromQuery] Guid id)
         {
             try
@@ -42,14 +44,16 @@ namespace CentralTicket.Contexts.Profile.Controllers
             }
         }
 
-        [HttpGet("{id}/sales")]
+        [Authorize]
+        [HttpGet("{id}/GetSaleByUserId")]
         public async Task<IActionResult> GetSales(Guid id)
         {
-            var sales = _getSales.Run(id);
+            var sales = await _getSales.Run(id);
             return Ok(sales);
         }
 
-        [HttpGet("{id}/tickets")]
+        [Authorize]
+        [HttpGet("{id}/GetTicketsBySaleId")]
         public async Task<IActionResult> GetTickets(Guid id)
         {
             var tickets = _getTickets.Run(id);

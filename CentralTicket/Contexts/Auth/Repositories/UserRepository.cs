@@ -13,6 +13,10 @@ namespace CentralTicket.Contexts.Auth.Repositories
         {
             _database = database;
         }
+        public User? GetById(Guid id)
+        {
+            return _database.Users.Find(id);
+        }
         public List<User> GetAll()
         {
             return _database.Users.ToList();

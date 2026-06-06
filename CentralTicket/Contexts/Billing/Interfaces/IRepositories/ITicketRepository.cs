@@ -6,5 +6,6 @@ namespace CentralTicket.Contexts.Billing.Interfaces.IRepositories
     {
         public List<Ticket> GetByIds(List<Guid> ids);
         public void Update(Ticket ticket);
+        public void Create(Ticket ticket);
     }
 }

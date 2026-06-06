@@ -20,9 +20,9 @@ namespace CentralTicket.Contexts.Billing.Mappings
             builder.OwnsOne(s => s.OrderCode, p =>
                 p.Property(x => x.Value).HasColumnName("OrderCode"));
 
-            builder.HasOne(s => s.Customer)
-                .WithMany()
-                .HasForeignKey("CustomerId");
+            builder.Property(s => s.CustomerId)
+                .HasColumnName("CustomerId")
+                .IsRequired();
 
             builder.HasMany(s => s.PurchasedTickets)
                 .WithOne()

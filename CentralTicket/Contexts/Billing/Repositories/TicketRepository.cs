@@ -25,5 +25,11 @@ namespace CentralTicket.Contexts.Billing.Repositories
             _database.Set<Ticket>().Update(ticket);
             _database.SaveChanges();
         }
+
+        public void Create(Ticket ticket)
+        {
+            _database.Set<Ticket>().Add(ticket);
+            _database.SaveChanges();
+        }
     }
 }

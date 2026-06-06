@@ -1,6 +1,7 @@
 using CentralTicket.Contexts.Events.DTOs.Event;
 using CentralTicket.Contexts.Events.Interfaces.IUseCases;
 using CentralTicket.Contexts.Events.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CentralTicket.Contexts.Events.Controllers;
@@ -29,14 +30,14 @@ public class EventsController : ControllerBase
         _updateEventStatusUseCase = updateEventStatusUseCase;
     }
 
-    [HttpGet]
+    [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
         var events = await _getAllEventsUseCase.ExecuteAsync();
         return Ok(events);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:guid}/GetById")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var ev = await _getEventByIdUseCase.ExecuteAsync(id);
@@ -47,7 +48,8 @@ public class EventsController : ControllerBase
         return Ok(ev);
     }
 
-    [HttpPost]
+    [Authorize]
+    [HttpPost("Create")]
     public async Task<IActionResult> Create([FromBody] CreateEventRequest request)
     {
         var dto = new CreateEventDTO
@@ -73,7 +75,8 @@ public class EventsController : ControllerBase
         }
     }
 
-    [HttpPut("{id:guid}")]
+    [Authorize]
+    [HttpPut("{id:guid}/UpdateEvent")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateEventRequest request)
     {
         var dto = new UpdateEventDTO
@@ -99,7 +102,8 @@ public class EventsController : ControllerBase
         }
     }
 
-    [HttpPatch("{id:guid}/status")]
+    [Authorize]
+    [HttpPatch("{id:guid}/UpdateStatus")]
     public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateStatusRequest request)
     {
         try

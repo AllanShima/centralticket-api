@@ -28,27 +28,25 @@ namespace CentralTicket.Contexts.Auth.UseCases
             var newUser = new User();
             var hashedPassword = new PasswordHasher<User>().HashPassword(newUser, request.Password.Value);
 
-            newUser.Id = Guid.NewGuid();
             newUser.Name = request.Name;
             newUser.Email = request.Email;
             newUser.PasswordHash = hashedPassword;
             newUser.ProfilePictureUrl = "";
             newUser.Sales = new List<Sale>();
-            newUser.createdAt = DateOnly.FromDateTime(DateTime.Now);
 
             _userRepository.Create(newUser);
 
             // Cria o usuário espelho no contexto de Profile
-            var profileUser = new Contexts.Profile.Entities.User
-            {
-                Name = new Contexts.Profile.ValueObjects.Name(request.Name.Value),
-                Email = new Contexts.Profile.ValueObjects.Email(request.Email.Value),
-                ProfilePictureUrl = ""
-            };
+            //var profileUser = new Contexts.Profile.Entities.User
+            //{
+            //    Name = new Contexts.Profile.ValueObjects.Name(request.Name.Value),
+            //    Email = new Contexts.Profile.ValueObjects.Email(request.Email.Value),
+            //    ProfilePictureUrl = ""
+            //};
 
-            profileUser.SetId(newUser.Id); // mesmo ID para conseguir buscar esse usuário no contexto de profile
+            //profileUser.SetId(newUser.Id); // mesmo ID para conseguir buscar esse usuário no contexto de profile
 
-            _profileUserRepository.Create(profileUser);
+            //_profileUserRepository.Create(profileUser);
 
             return newUser;
         }

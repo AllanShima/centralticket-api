@@ -9,72 +9,90 @@ namespace CentralTicket.Contexts.Billing.UseCases
     public class CreateSaleUseCase : ICreateSaleUseCase
     {
         private readonly ISaleRepository _saleRepository;
-        private readonly IUserRepository _userRepository;
+        //private readonly IUserRepository _userRepository;
         private readonly ITicketRepository _ticketRepository;
-        private readonly Contexts.Profile.Interfaces.IRepositories.ISaleRepository _profileSaleRepository;
-        private readonly Contexts.Profile.Interfaces.IRepositories.IUserRepository _profileUserRepository;
+        private readonly Contexts.Auth.Interfaces.IRepositories.IUserRepository _authUserRepository;
+        // private readonly Contexts.Profile.Interfaces.IRepositories.ISaleRepository _profileSaleRepository;
+        // private readonly Contexts.Profile.Interfaces.IRepositories.IUserRepository _profileUserRepository;
 
         public CreateSaleUseCase(
             ISaleRepository saleRepository,
-            IUserRepository userRepository,
-            ITicketRepository ticketRepository,
-            Contexts.Profile.Interfaces.IRepositories.ISaleRepository profileSaleRepository,
-            Contexts.Profile.Interfaces.IRepositories.IUserRepository profileUserRepository)
+            //IUserRepository userRepository,
+            Contexts.Auth.Interfaces.IRepositories.IUserRepository authUserRepository,
+            ITicketRepository ticketRepository
+            // Contexts.Profile.Interfaces.IRepositories.ISaleRepository profileSaleRepository,
+            // Contexts.Profile.Interfaces.IRepositories.IUserRepository profileUserRepository
+            )
         {
             _saleRepository = saleRepository;
-            _userRepository = userRepository;
+            _authUserRepository = authUserRepository;
+            //_userRepository = userRepository;
             _ticketRepository = ticketRepository;
-            _profileSaleRepository = profileSaleRepository;
-            _profileUserRepository = profileUserRepository;
+            // _profileSaleRepository = profileSaleRepository;
+            // _profileUserRepository = profileUserRepository;
         }
 
         public void Run(CreateSaleDTO sale)
         {
-            var customer = _userRepository.GetById(sale.UserId);
-            var tickets = _ticketRepository.GetByIds(sale.TicketIds);
+            //var customer = _userRepository.GetById(sale.UserId);
+            var customer = _authUserRepository.GetById(sale.UserId);
+            if (customer == null)
+                throw new ArgumentException($"Usuário com id '{sale.UserId}' não encontrado.", nameof(sale.UserId));
 
             var newSale = new Sale
             {
                 PaymentMethod = sale.PaymentMethod,
-                Customer = customer,
-                PurchasedTickets = tickets,
+                CustomerId = sale.UserId,
+                PurchasedTickets = new List<Ticket>()
             };
 
             newSale.UpdateTotalValue(sale.TotalValue);
             newSale.Status = SaleStatus.AwaitingApproval;
 
-            _saleRepository.Create(newSale);
-
-            foreach (var ticket in tickets)
+            var tickets = sale.Tickets.Select(t => new Ticket
             {
-                ticket.Status = TicketStatus.Reserved;
-                _ticketRepository.Update(ticket);
-            }
-
-            // Espelha no Profile
-            var profileCustomer = _profileUserRepository.GetById(sale.UserId);
-
-            var profileTickets = tickets.Select(t => new Contexts.Profile.Entities.Ticket
-            {
-                Category = t.Category.ToString(),
-                Kind = t.Kind.ToString(),
+                Category = t.Category,
+                Kind = t.Kind,
+                Status = TicketStatus.Reserved,
+                EventId = sale.EventId,         
+                SaleId = newSale.Id
             }).ToList();
 
-            foreach (var pt in profileTickets)
-                pt.SetId(tickets[profileTickets.IndexOf(pt)].Id);
+            newSale.PurchasedTickets = tickets;
 
-            var profileSale = new Contexts.Profile.Entities.Sale
-            {
-                PaymentMethod = sale.PaymentMethod.ToString(),
-                OrderCode = newSale.OrderCode.Value,
-                Customer = profileCustomer,
-                PurchasedTickets = profileTickets,
-            };
+            _saleRepository.Create(newSale);
 
-            profileSale.SetId(newSale.Id);
-            profileSale.UpdateTotalValue(sale.TotalValue.Value);
+            // O relacionamento já faz isso
 
-            _profileSaleRepository.Create(profileSale);
+            //foreach (var ticket in tickets)
+            //{
+            //    _ticketRepository.Create(ticket);
+            //}
+
+            // Espelha no Profile
+            //var profileCustomer = _profileUserRepository.GetById(sale.UserId);
+
+            //var profileTickets = tickets.Select(t => new Contexts.Profile.Entities.Ticket
+            //{
+            //    Category = t.Category.ToString(),
+            //    Kind = t.Kind.ToString(),
+            //}).ToList();
+
+            //foreach (var pt in profileTickets)
+            //    pt.SetId(tickets[profileTickets.IndexOf(pt)].Id);
+
+            //var profileSale = new Contexts.Profile.Entities.Sale
+            //{
+            //    PaymentMethod = sale.PaymentMethod.ToString(),
+            //    OrderCode = newSale.OrderCode.Value,
+            //    Customer = profileCustomer,
+            //    PurchasedTickets = profileTickets,
+            //};
+
+            //profileSale.SetId(newSale.Id);
+            //profileSale.UpdateTotalValue(sale.TotalValue.Value);
+
+            //_profileSaleRepository.Create(profileSale);
         }
     }
 }

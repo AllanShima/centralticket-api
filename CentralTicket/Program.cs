@@ -1,9 +1,9 @@
 using CentralTicket.Contexts.Auth.Data;
+using CentralTicket.Contexts.Auth.Interfaces.IUseCases;
+using CentralTicket.Contexts.Auth.UseCases;
 using CentralTicket.Contexts.Billing.Data;
 using CentralTicket.Contexts.Events.Data;
 using CentralTicket.Contexts.Profile.Data;
-using CentralTicket.Contexts.Auth.Interfaces.IUseCases;
-using CentralTicket.Contexts.Auth.UseCases;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -82,8 +82,12 @@ namespace CentralTicket
             builder.Services.AddScoped<Contexts.Events.Interfaces.IUseCases.IUpdateTicketsRemainingUseCase, Contexts.Events.UseCases.UpdateTicketsRemainingUseCase>();
 
             // Profile
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IRepositories.ITicketRepository, Contexts.Profile.Repositories.TicketRepository>();
             builder.Services.AddScoped<Contexts.Profile.Interfaces.IRepositories.IUserRepository, Contexts.Profile.Repositories.UserRepository>();
             builder.Services.AddScoped<Contexts.Profile.Interfaces.IRepositories.ISaleRepository, Contexts.Profile.Repositories.SaleRepository>();
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IUseCases.IGetUserByIdUseCase, Contexts.Profile.UseCases.GetUserByIdUseCase>();
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IUseCases.IGetSalesByIdUseCase, Contexts.Profile.UseCases.GetSalesByUserIdUseCase>();
+            builder.Services.AddScoped<Contexts.Profile.Interfaces.IUseCases.IGetTicketsBySaleIdUseCase, Contexts.Profile.UseCases.GetTicketsBySaleIdUseCase>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
