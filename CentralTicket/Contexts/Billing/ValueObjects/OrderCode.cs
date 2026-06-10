@@ -2,11 +2,11 @@
 {
     public class OrderCode
     {
-        public string Value { get; private set; }
+        public Guid Value { get; private set; }
 
-        public OrderCode(string orderCode)
+        public OrderCode(Guid orderCode)
         {
-            if (orderCode == null) throw new ArgumentNullException("Título precisa ser preenchido");
+            if (orderCode == null) throw new ArgumentNullException("Código precisa ser preenchido");
 
             this.Value = orderCode;
         }

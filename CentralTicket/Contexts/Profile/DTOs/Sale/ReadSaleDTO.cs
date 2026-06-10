@@ -8,7 +8,7 @@ namespace CentralTicket.Contexts.Profile.DTOs.Sale
         public decimal TotalValue { get; set; }
         public string Status { get; set; }
         public string PaymentMethod { get; set; }
-        public string OrderCode { get; set; }
+        public Guid OrderCode { get; set; }
         public List<ReadTicketDTO> PurchasedTickets { get; set; }
     }
 }

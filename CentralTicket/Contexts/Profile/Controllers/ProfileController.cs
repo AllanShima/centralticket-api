@@ -45,7 +45,7 @@ namespace CentralTicket.Contexts.Profile.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}/GetSaleByUserId")]
+        [HttpGet("{id}/GetSalesByUserId")]
         public async Task<IActionResult> GetSales(Guid id)
         {
             var sales = await _getSales.Run(id);

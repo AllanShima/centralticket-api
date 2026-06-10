@@ -9,7 +9,7 @@ namespace CentralTicket.Contexts.Billing.Entities
         public Price TotalValue { get; private set; }
         public PaymentMethod PaymentMethod {  get; set; }
         public SaleStatus Status { get; set; }
-        public OrderCode OrderCode { get; set; }
+        public OrderCode OrderCode { get; set; } = new OrderCode(Guid.NewGuid());
         // public User Customer { get; set; }
 
         public Guid CustomerId { get; set; }

@@ -33,6 +33,7 @@
                 Id = s.Id,
                 TotalValue = s.TotalValue.Value,
                 PaymentMethod = s.PaymentMethod.ToString(),
+                Status = s.Status.ToString(),
                 OrderCode = s.OrderCode.Value,
                 PurchasedTickets = s.PurchasedTickets.Select(t =>
                 {
@@ -41,6 +42,7 @@
                     return new ReadTicketDTO
                     {
                         Id = t.Id,
+                        Title = "Ingresso para " + currentEvent?.Title ?? "Evento Não Encontrado",
                         Status = t.Status.ToString(),
                         EventTitle = currentEvent?.Title ?? "Evento Não Encontrado",
                         EventStartDate = currentEvent?.StartDate ?? DateTime.MinValue,
