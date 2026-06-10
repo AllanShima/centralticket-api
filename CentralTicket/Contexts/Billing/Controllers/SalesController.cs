@@ -1,6 +1,7 @@
 ﻿using CentralTicket.Contexts.Billing.DTOs.Sale;
 using CentralTicket.Contexts.Billing.Interfaces.IUseCases;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CentralTicket.Contexts.Billing.Controllers
@@ -71,9 +72,9 @@ namespace CentralTicket.Contexts.Billing.Controllers
         {
             try
             {
-                await this._createSaleUseCase.Run(sale);
+                var result = await this._createSaleUseCase.Run(sale);
 
-                return Created();
+                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
             }
             catch (Exception ex)
             {

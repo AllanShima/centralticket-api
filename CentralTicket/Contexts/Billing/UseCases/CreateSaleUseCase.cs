@@ -32,7 +32,7 @@ namespace CentralTicket.Contexts.Billing.UseCases
             // _profileUserRepository = profileUserRepository;
         }
 
-        public async Task Run(CreateSaleDTO sale)
+        public async Task<Sale> Run(CreateSaleDTO sale)
         {
             // Busca o evento pra validar o estoque
             var ev = await _eventRepository.GetByIdAsync(sale.EventId);
@@ -95,6 +95,8 @@ namespace CentralTicket.Contexts.Billing.UseCases
             newSale.PurchasedTickets = tickets;
 
             _saleRepository.Create(newSale);
+
+            return newSale;
 
             // O relacionamento já faz isso
 
