@@ -6,6 +6,9 @@
         public string Title { get; set; }
         public string Status { get; set; }
         public string EventTitle { get; set; }
+
+        public string EventLocation { get; set; }
+        public string EventImageUrl { get; set; }
         public DateTime EventStartDate { get; set; }
         public DateTime EventEndDate { get; set; }
     }

@@ -25,7 +25,8 @@ namespace CentralTicket.Contexts.Profile.UseCases
                 Id = user.Id,
                 Name = new ValueObjects.Name(user.Name.Value),
                 Email = new ValueObjects.Email(user.Email.Value),
-                ProfilePictureUrl = user.ProfilePictureUrl
+                ProfilePictureUrl = user.ProfilePictureUrl,
+                CreatedAt = user.CreatedAt
             };
         }
     }

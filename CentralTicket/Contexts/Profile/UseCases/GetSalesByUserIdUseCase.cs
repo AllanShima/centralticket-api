@@ -44,7 +44,9 @@
                         Id = t.Id,
                         Title = "Ingresso para " + currentEvent?.Title ?? "Evento Não Encontrado",
                         Status = t.Status.ToString(),
-                        EventTitle = currentEvent?.Title ?? "Evento Não Encontrado",
+                        EventTitle = currentEvent?.Title ?? "Evento não encontrado",
+                        EventLocation = currentEvent?.Location ?? "Localização não encontrada",
+                        EventImageUrl = currentEvent?.ImageUrl ?? "Imagem não encontrada",
                         EventStartDate = currentEvent?.StartDate ?? DateTime.MinValue,
                         EventEndDate = currentEvent?.EndDate ?? DateTime.MinValue
                     };

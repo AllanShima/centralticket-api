@@ -34,6 +34,8 @@
                     Id = t.Id,
                     Status = t.Status.ToString(),
                     EventTitle = currentEvent != null ? currentEvent.Title : "Evento não encontrado",
+                    EventLocation = currentEvent != null ? currentEvent.Location : "Localização não encontrada",
+                    EventImageUrl = currentEvent != null ? currentEvent.ImageUrl : "Imagem não encontrada",
                     EventStartDate = currentEvent != null ? currentEvent.StartDate : default,
                     EventEndDate = currentEvent != null ? currentEvent.EndDate : default
                 };
