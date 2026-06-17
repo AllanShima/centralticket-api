@@ -1,4 +1,13 @@
-# Escopo MVP da API do projeto "CentralTicket"
+# API-CENTRALTICKET
+> API do projeto em grupo que compõe o front-end do projeto final do semestre do Quinto Termo de Bacharel de Ciências da Computação
+> Matéria: ARQUITETURA DE SOFTWARE E DESENVOLVIMENTO FULL STACK
+> Integrantes e responsabilidades do grupo:
+  - Allan (Front-end, contexto de Autenticação do usuário) - AllanShima
+  - Guilherme Ryu (contexto de Profile) - 
+  - Hugo Facchini (contexto de Billing) - 
+  - Renan (contexto de Events) - RenanHikaru
+
+## Escopo MVP da API do projeto "CentralTicket"
 
 <img width="2391" height="1421" alt="escopo_centralticket-api drawio" src="https://github.com/user-attachments/assets/f41124f3-cc0c-4c48-acdc-1bc381da5762" />
 
