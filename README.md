@@ -13,12 +13,12 @@
   - Renan (contexto de Events) - github.com/RenanHikaru
 
 ## Tabela de Conteúdo
-- [Escopo MVP](Escopo-MVP)
-- [Tecnologias](Tecnologias)
-- [Arquitetura](Arquitetura)
-- [Pré-requisitos](Pré-requisitos)
-- [Arquitetura](Arquitetura)
-- [Configuração e Execução](Configuração-e-Execução)
+- [Escopo MVP](#escopo-mvp)
+- [Tecnologias](#tecnologias)
+- [Arquitetura](#arquitetura)
+- [Pré-requisitos](#pré-requisitos)
+- [Arquitetura](#arquitetura)
+- [Configuração e Execução](#configuração-e-execução)
 
 ## Escopo MVP
 > Escopo da API REST para venda e gerenciamento de ingressos. Elaborado para o projeto "CentralTicket".
