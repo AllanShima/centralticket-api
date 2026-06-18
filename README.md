@@ -18,7 +18,6 @@
 - [Escopo MVP](#escopo-mvp)
 - [Tecnologias](#tecnologias)
 - [Arquitetura](#arquitetura)
-- [O que foi Entregue](#o-que-foi-entregue)
 - [Requisitos de Instalação](#requisitos-de-instalação)
 - [Configuração e Execução](#configuração-e-execução)
 
