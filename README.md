@@ -4,7 +4,8 @@
 ---
 #### Curso: ARQUITETURA DE SOFTWARE E DESENVOLVIMENTO FULL STACK
 #### Classe: 5º Termo - A, Bacharel em Ciências da Computação, UNIMAR
-#### Docente: William
+#### Docente: William Castro
+#### Data e Prazo para o Desenvolvimento: 11/06/2026
 
 #### Integrantes e Responsabilidades do Grupo:
   - Allan (Front-end, contexto de Autenticação do usuário) - github.com/AllanShima
@@ -13,12 +14,20 @@
   - Renan (contexto de Events) - github.com/RenanHikaru
 
 ## Tabela de Conteúdo
+- [Requisitos do Projeto](#requisitos-do-projeto)
 - [Escopo MVP](#escopo-mvp)
 - [Tecnologias](#tecnologias)
 - [Arquitetura](#arquitetura)
-- [Pré-requisitos](#pré-requisitos)
-- [Arquitetura](#arquitetura)
+- [O que foi Entregue](#o-que-foi-entregue)
+- [Requisitos de Instalação](#requisitos-de-instalação)
 - [Configuração e Execução](#configuração-e-execução)
+
+## Requisitos mínimos do Projeto
+> O que foi pedido pelo docente
+- Contexto 1: Eventos
+- Contexto 2: Vendas
+- Funcionalidades: cadastro de eventos e compra de ingressos.
+- Regras: não vender acima da capacidade, impedir compra para eventos passados, validar status do pagamento.
 
 ## Escopo MVP
 > Escopo da API REST para venda e gerenciamento de ingressos. Elaborado para o projeto "CentralTicket".
@@ -37,9 +46,10 @@
 > O projeto segue os princípios de Domain-Driven Design (DDD), organizado em Bounded Contexts independentes:
 - **Auth** — cadastro, login e gerenciamento de tokens JWT
 - **Billing** — vendas e emissão de ingressos
+- **Events** — manipulação e criação dos eventos
 - **Profile** — dados de perfil do usuário
 
-## Pré-requisitos
+## Requisitos de Instalação
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [MySQL 8+](https://dev.mysql.com/downloads/)
 - [EF Core CLI](https://learn.microsoft.com/ef/core/cli/dotnet)
@@ -106,3 +116,6 @@ A documentação interativa (Scalar) pode ser acessada em:
 ```
 http://localhost:5041/scalar
 ```
+
+## Observações
+- Alguns endpoints, mesmo em função, não foram possíveis de ser implementado com o front a fim de caber o prazo de entrega do projeto.
