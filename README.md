@@ -5,7 +5,7 @@
 #### Curso: ARQUITETURA DE SOFTWARE E DESENVOLVIMENTO FULL STACK
 #### Classe: 5º Termo - A, Bacharel em Ciências da Computação, UNIMAR
 #### Docente: William Castro
-#### Data e Prazo para o Desenvolvimento: 11/06/2026
+#### Data e Prazo para o Desenvolvimento: 16/04/2026 - 11/06/2026
 
 #### Integrantes e Responsabilidades do Grupo:
   - Allan (Front-end, contexto de Autenticação do usuário) - github.com/AllanShima
